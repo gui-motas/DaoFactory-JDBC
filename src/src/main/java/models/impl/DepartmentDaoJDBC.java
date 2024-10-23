@@ -28,12 +28,31 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public void update(Department obj) {
+        String sql = "UPADATE DEPARTMENT SET name = ? WHERE id = ?";
+
+        try (Connection conexao = dbConfig.getConnection();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, obj.getName());
+            stmt.setInt(2, obj.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
 
     }
 
     @Override
     public void deleteById(Integer id) {
+String sql = "DELETE FROM DEPARTMENT WHERE id = ?";
 
+        try (Connection conexao = dbConfig.getConnection();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
